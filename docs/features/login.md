@@ -104,14 +104,10 @@ The same response is returned when the user does not exist, the email credential
 
 Request validation failures return `400 Bad Request`. Other HTTP, timeout, connectivity, TLS, parsing, device-ID storage, and token-storage failures are mapped by the mobile application to a user-facing message. No tokens are saved and navigation does not occur when any part of the login operation fails.
 
-## Token and session handling
+## Token handling
 
-- The access token, refresh token, token type, lifetime, and calculated access-token expiry timestamp are stored together using `flutter_secure_storage` under the `auth_tokens` key.
-- The device ID is generated once as a UUID and stored separately in shared preferences under the `device_id` key.
-- The authentication service stores only the SHA-256 hash of each refresh token, together with its user, device ID, expiration time, creation time, and revocation state.
-- On application startup, the authentication gate checks secure storage. A non-expired access token opens the authenticated area.
-- If the access token has expired, the application calls `POST /auth/refresh` with the stored refresh token. A successful refresh replaces the stored token pair; a failed refresh clears local tokens and returns the user to the welcome screen.
-- If there are no stored tokens or secure storage cannot be read, the user is treated as unauthenticated.
+- After a successful login, the mobile application stores the access token, refresh token, token type, lifetime, and calculated access-token expiry timestamp using `flutter_secure_storage` under the `auth_tokens` key.
+- The authentication service stores only the SHA-256 hash of the issued refresh token, together with its user, device ID, expiration time, creation time, and revocation state.
 
 ## Security behavior
 

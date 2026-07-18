@@ -23,11 +23,11 @@ Users sign in with an email and password to receive tokens that give the mobile 
 ```mermaid
 sequenceDiagram
     actor User
-    participant Mobile as [mobile]
-    participant Device as [mobile: device storage]
-    participant Auth as [auth]
-    participant DB as [auth: database]
-    participant Secure as [mobile: secure storage]
+    participant Mobile as [mobile] Sport Matcher mobile app
+    participant Device as [mobile] Device ID storage
+    participant Auth as [auth] Sport Matcher authentication service
+    participant DB as [auth] Authentication database
+    participant Secure as [mobile] Secure token storage
 
     User->>Mobile: Enter email and password
     Mobile->>Device: Load or create device ID

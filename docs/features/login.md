@@ -18,18 +18,16 @@ Users sign in with an email and password to receive tokens that give the mobile 
 8. The application stores the returned tokens in platform secure storage and opens the authenticated user screen.
 9. On failure, the user stays on the sign-in screen and sees an error in a red snackbar.
 
-The email and password are sent as entered. The current implementation does not trim whitespace or normalize email casing.
-
 ## Interaction
 
 ```mermaid
 sequenceDiagram
     actor User
-    participant Mobile as Mobile application
-    participant Device as Device ID storage
-    participant Auth as Authentication service
-    participant DB as Authentication database
-    participant Secure as Secure token storage
+    participant Mobile as [mobile]
+    participant Device as [mobile: device storage]
+    participant Auth as [auth]
+    participant DB as [auth: database]
+    participant Secure as [mobile: secure storage]
 
     User->>Mobile: Enter email and password
     Mobile->>Device: Load or create device ID

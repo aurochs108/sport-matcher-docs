@@ -2,9 +2,7 @@
 
 ## Overview
 
-Sport Matcher supports signing in with an email address and password. The mobile application validates the form, obtains a stable device identifier, and sends the credentials to the authentication service. After the service verifies the credentials, it returns an access token and a device-bound refresh token. The mobile application stores both tokens and opens the authenticated area.
-
-The implementation currently supports only the `EMAIL` authentication provider.
+Users sign in with an email and password to receive tokens that give the mobile application access to authenticated features.
 
 ## User flow
 
@@ -132,33 +130,3 @@ Request validation failures return `400 Bad Request`. Other HTTP, timeout, conne
 - The authentication service currently has no login rate limiting or account lockout.
 - The backend does not enforce the mobile password-length rule during login; it checks only that the password is present.
 - Device IDs identify an application installation, not hardware. They are stored in shared preferences and may change when application data is removed.
-
-## Implementation map
-
-### Mobile application
-
-| Responsibility | Location |
-| --- | --- |
-| Authentication gate and startup session check | `lib/ui/authentication/auth_gate/` |
-| Welcome and sign-in screens | `lib/ui/authentication/welcome/`, `lib/ui/authentication/sign_in/` |
-| Shared email/password form and validation | `lib/ui/authentication/email_authentication/` |
-| Login request and response models | `lib/data/auth/network/` |
-| Login orchestration and token persistence | `lib/data/auth/repository/auth_repository.dart` |
-| Session restoration and refresh decision | `lib/data/auth/manager/auth_token_manager.dart` |
-| Secure token storage | `lib/data/auth/persistence/database/auth_tokens_database.dart` |
-| Stable device ID | `lib/data/device_id/` |
-
-### Authentication service
-
-| Responsibility | Location |
-| --- | --- |
-| Login endpoint and invalid-credential response | `login/email/controller/EmailLoginController.kt` |
-| Request validation | `login/email/dto/EmailLoginRequest.kt` |
-| Credential verification and token issuance | `login/email/service/EmailLoginService.kt` |
-| JWT generation | `token/service/JwtService.kt` |
-| Refresh-token hashing and persistence | `token/service/RefreshTokenService.kt` |
-| Public authentication routes and BCrypt configuration | `config/SecurityConfig.kt` |
-
-## Test coverage
-
-The mobile tests cover form activation, successful navigation, invalid-credential messaging, device-ID retrieval, API errors, secure token persistence, session restoration, token refresh, and cleanup after refresh failure. The authentication-service tests cover the success response, public endpoint access, BCrypt configuration, and failures for an unknown user, missing email credential, missing password hash, and password mismatch.

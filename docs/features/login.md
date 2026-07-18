@@ -15,7 +15,7 @@ Users sign in with an email and password to receive tokens that give the mobile 
 5. The application calls `POST /auth/login/email`.
 6. The authentication service looks up the user and their email credential, then verifies the password against the stored BCrypt hash.
 7. On success, the service creates an access JWT and a refresh token.
-8. The application stores the returned tokens in platform secure storage and replaces the sign-in screen with the bottom navigation screen.
+8. The application stores the returned tokens in platform secure storage and opens the authenticated user screen.
 9. On failure, the user stays on the sign-in screen and sees an error in a red snackbar.
 
 The email and password are sent as entered. The current implementation does not trim whitespace or normalize email casing.

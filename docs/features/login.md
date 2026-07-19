@@ -60,9 +60,9 @@ The endpoint is public and expects `Content-Type: application/json`.
 
 | Field | Type | Required | Mobile validation | Backend validation | Use |
 | --- | --- | --- | --- | --- | --- |
-| `email` | string | yes | Valid email, maximum 254 characters | Non-blank, valid email | Finds the user |
-| `password` | string | yes | 12–255 characters | Non-blank | Compared with the BCrypt hash |
-| `deviceId` | string | yes | Generated UUID | Non-blank | Associated with the refresh token |
+| `email` | string | ✅ | Valid email, maximum 254 characters | Non-blank, valid email | Finds the user |
+| `password` | string | ✅ | 12–255 characters | Non-blank | Compared with the BCrypt hash |
+| `deviceId` | string | ✅ | Generated UUID | Non-blank | Associated with the refresh token |
 
 ### Success response
 
@@ -96,10 +96,10 @@ Status: `401 Unauthorized`
 
 The same response is returned when:
 
-- the user does not exist;
-- the email credential is missing;
-- the password hash is missing;
-- the password does not match.
+- The user does not exist.
+- The email credential is missing.
+- The password hash is missing.
+- The password does not match.
 
 The mobile application displays `Invalid login or password.` for this code.
 

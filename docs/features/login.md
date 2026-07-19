@@ -58,13 +58,11 @@ The endpoint is public and expects `Content-Type: application/json`.
 }
 ```
 
-| Field | Type | Required | Validation and use |
-| --- | --- | --- | --- |
-| `email` | string | yes | Must be non-blank and a valid email address. Used to find the user. |
-| `password` | string | yes | Must be non-blank. Compared with the stored BCrypt hash. |
-| `deviceId` | string | yes | Must be non-blank. Associated with the issued refresh token. |
-
-The backend accepts any non-blank password, while the mobile form only submits passwords containing 12 to 255 characters.
+| Field | Type | Required | Mobile validation | Backend validation | Use |
+| --- | --- | --- | --- | --- | --- |
+| `email` | string | yes | Valid email, maximum 254 characters | Non-blank, valid email | Finds the user |
+| `password` | string | yes | 12–255 characters | Non-blank | Compared with the BCrypt hash |
+| `deviceId` | string | yes | Generated UUID | Non-blank | Associated with the refresh token |
 
 ### Success response
 
@@ -81,12 +79,10 @@ Status: `200 OK`
 
 | Field | Description |
 | --- | --- |
-| `accessToken` | Signed JWT used as the access credential. |
-| `refreshToken` | Opaque UUID token used to obtain a new token pair. |
+| `accessToken` | Signed JWT containing the user ID, email, unique token ID, issue time, and expiration time. |
+| `refreshToken` | Opaque UUID token used to obtain new tokens. The default lifetime is 604800 seconds (7 days). |
 | `tokenType` | Always `Bearer`. |
 | `expiresIn` | Access-token lifetime in seconds; the default is 900 seconds. |
-
-The JWT subject is the user ID. It also contains the email, a unique token ID, issue time, and expiration time. The refresh-token lifetime defaults to 604800 seconds (7 days).
 
 ### Invalid credentials response
 

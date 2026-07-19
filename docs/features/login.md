@@ -94,11 +94,20 @@ Status: `401 Unauthorized`
 }
 ```
 
-The same response is returned when the user does not exist, the email credential or password hash is missing, or the password does not match. The mobile application displays `Invalid login or password.` for this code.
+The same response is returned when:
+
+- the user does not exist;
+- the email credential is missing;
+- the password hash is missing;
+- the password does not match.
+
+The mobile application displays `Invalid login or password.` for this code.
 
 ### Other errors
 
-Request validation failures return `400 Bad Request`. Other HTTP, timeout, connectivity, TLS, parsing, device-ID storage, and token-storage failures are mapped by the mobile application to a user-facing message. No tokens are saved and navigation does not occur when any part of the login operation fails.
+- Request validation failures return `400 Bad Request`.
+- HTTP, timeout, connectivity, TLS, parsing, device-ID storage, and token-storage failures are mapped to a user-facing message.
+- If login fails, tokens are not saved and the user remains on the sign-in screen.
 
 ## Token handling
 
